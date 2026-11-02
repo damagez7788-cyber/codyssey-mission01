@@ -1,0 +1,22 @@
+# GitHub upload verification — actual output
+
+Verified on 2026-11-03 Asia/Seoul. actor=jarvis-assisted
+The commands below inspect the initial successful private upload, before this status-document update.
+
+$ gh repo view damagez7788-cyber/codyssey-mission01 --json nameWithOwner,isPrivate,url,defaultBranchRef
+{"defaultBranchRef":{"name":"main"},"isPrivate":true,"nameWithOwner":"damagez7788-cyber/codyssey-mission01","url":"https://github.com/damagez7788-cyber/codyssey-mission01"}
+[exit_code=0]
+
+$ git status --short --branch
+## main...origin/main
+[exit_code=0]
+
+$ git rev-parse HEAD
+dddb0e7d6c20b45684b5ce7a66a6dc0c8771d6aa
+[exit_code=0]
+
+$ git ls-remote --heads origin main
+dddb0e7d6c20b45684b5ce7a66a6dc0c8771d6aa	refs/heads/main
+[exit_code=0]
+
+解釈 / 해석: isPrivate=true means the repository is private. main...origin/main without ahead/behind or changed files means the local branch tracks the remote with no pending changes at this check. Equal local HEAD and remote main hashes prove these commits reached GitHub. This does not mean Codyssey evaluation was requested or passed.

@@ -1,6 +1,6 @@
 # 로컬 Git 이력 확인
 
-새 제출 프로젝트의 코드·README·실제 증거를 로컬 Git으로 기록했습니다. GitHub 업로드는 아직 하지 않았습니다.
+새 제출 프로젝트의 코드·README·실제 증거를 로컬 Git으로 기록한 뒤, 전용 비공개 GitHub 저장소의 main 브랜치에 업로드했습니다. 아래는 최초 로컬 기록 당시의 실제 출력입니다. 이후 업로드 확인은 [별도 로그](../evidence/09_github_upload.txt)에 기록했습니다.
 
 ```text
 $ git log -1 --format=fuller
