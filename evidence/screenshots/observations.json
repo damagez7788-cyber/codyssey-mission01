@@ -29,7 +29,21 @@
       "observed": "Direct browser connection recovered after session reset. Live page has WORKSHOP_V1 and all page sections. This is a real screenshot, not a recreated browser frame.",
       "verified_on": "2026-11-03",
       "sha256": "125e36625906a6d40dca834a605322ce59c654ef78dd815d81ef027f91a4a040"
+    },
+    {
+      "file": "chrome-addressbar-18080.png",
+      "url": "http://localhost:18080/",
+      "source": "User-provided original Chrome screenshot, 2026-11-03",
+      "scope": "Chrome window including address bar and live page",
+      "observed": "localhost:18080 in address bar; Jun Workshop title and WORKSHOP_V1 in content",
+      "sha256": "bda4cf5c88fe1794d45fe084c84a217951c9ececcf8b4825445dd271cb888e44"
     }
   ],
-  "native_address_bar_capture": "Tool stopped because it could not establish the Windows browser URL with enough confidence; no further UI input issued."
+  "native_address_bar_capture": {
+    "status": "verified_user_provided",
+    "date": "2026-11-03",
+    "file": "chrome-addressbar-18080.png",
+    "observed": "Chrome address bar localhost:18080 and the live Jun Workshop page with WORKSHOP_V1 are visible together. Original screenshot copied without editing."
+  },
+  "native_capture_automation_history": "Tool stopped because it could not establish the Windows browser URL with enough confidence; no further UI input issued."
 }
