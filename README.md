@@ -6,6 +6,8 @@
 
 이 저장소에는 이전 학습 연습 파일·화면을 포함하지 않았습니다. 새 프로젝트 코드 작성과 검증은 자비스의 지원으로 수행했으며, 로그의 `actor=jarvis-assisted`로 실행 주체를 표시했습니다.
 
+**학습자 확인은 별도:** 원문의 Dockerfile 직접 작성, 포트·마운트·볼륨 직접 설정·검증 및 여섯 과제 목표를 스스로 설명하는 능력은 아직 본인 수행으로 확인하지 않았습니다. 아래의 ‘확인’은 제출자료와 지원 실행 기록의 확인을 뜻합니다. 선택 보너스 5개 항목의 수행 증거는 포함하지 않습니다.
+
 ## 1 프로젝트 개요와 커스텀 내용
 
 터미널·Docker·Git의 차이를 설명하는 한국어 작업실 노트 웹페이지를 만들었습니다. 외부 폰트·CDN·별도 JavaScript 라이브러리를 사용하지 않아, 웹 서버가 켜진 환경에서는 같은 정적 파일로 화면을 확인할 수 있습니다.
@@ -62,13 +64,16 @@ Linux 또는 WSL의 Ubuntu에서 Docker 엔진이 실행 중이고 `docker info`
 sudo docker build -t jun-workshop:1.0 .
 sudo docker run -d --name jun-workshop-review \
   -p 127.0.0.1:18090:80 jun-workshop:1.0
+curl --fail --silent --show-error --retry 10 \
+  --retry-all-errors --retry-delay 1 --max-time 3 \
+  http://localhost:18090/health
 curl --fail --include http://localhost:18090/
-curl --fail http://localhost:18090/health
 ```
 
 - `build`: Dockerfile을 읽어 이미지 제작. `-t`: 이미지 이름·태그. 마지막 `.`: 현재 폴더를 빌드 자료로 사용.
 - `run`: 새 컨테이너 생성·실행. `-d`: 백그라운드. `--name`: 이름. `-p`: 호스트 주소·포트를 컨테이너의 80번에 연결.
 - `curl --include`: 요청한 주소의 HTTP 헤더와 본문 표시. `--fail`: HTTP 오류를 실패로 반환.
+- 먼저 `/health`로 서버 준비 상태를 확인합니다. `--silent --show-error`는 진행 표시를 줄이고 오류는 표시하며, `--retry 10 --retry-all-errors`는 오류 시 최대 10회 재시도, `--retry-delay 1`은 재시도 간 1초 대기, `--max-time 3`은 각 요청의 최대 대기 3초입니다. 최종 요청까지 실패하면 서버 로그와 포트를 확인한 뒤 다음 단계로 진행합니다.
 - 예상 확인 기준: 페이지에 `WORKSHOP_V1`과 작업실 콘텐츠가 있고, `/health`는 `workshop-ready`를 응답합니다. 위 명령은 재현 방법이며, 이 포트 18090의 출력은 별도로 실행한 증거가 아닙니다.
 
 브라우저 주소는 `http://localhost:18090/`입니다. 이름이나 포트가 이미 사용 중이면 다른 학습용 이름·포트를 사용합니다. 기존 컨테이너를 일괄 삭제하지 않습니다. Docker를 이미 일반 사용자로 사용할 수 있으면 Docker 명령의 `sudo`를 생략할 수 있습니다.
