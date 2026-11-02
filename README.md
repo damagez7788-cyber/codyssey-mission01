@@ -164,3 +164,9 @@ writer 컨테이너를 중지·삭제한 뒤 reader 컨테이너에서 같은 �
 2026-11-03 사용자가 제공한 실제 VS Code 계정 메뉴 화면에서 `damagez7788-cyber (GitHub)`를 확인했습니다. 이 화면은 GitHub 로그인 완료의 증거입니다. 별도로 VS Code에서 `codyssey-mission01 [WSL: Ubuntu]` 프로젝트와 `main` 브랜치가 열린 것을 확인했고, GitHub 업로드는 실제 push와 원격 브랜치 해시 비교로 검증했습니다. 설정 동기화나 Remote Tunnel 같은 추가 기능의 활성화를 주장하지 않습니다.
 
 ![VS Code 계정 메뉴의 GitHub 로그인 확인](evidence/screenshots/vscode-github-account.png)
+
+## 10 실제 웹페이지 전체 캡처
+
+2026-11-03 연결된 브라우저에서 `http://localhost:18080/`를 직접 확인하고 페이지 전체를 캡처했습니다. 상단부터 하단까지 실제 웹 콘텐츠가 포함되어 있습니다. 이 캡처에는 브라우저 자체 주소창이 포함되지 않으며, 주소창 포함 증거 요구사항을 충족했다고 표시하지 않습니다. 포트와 HTTP 응답은 기존 [접속 로그](evidence/20261102T170206Z/05_ports.txt)에서 확인할 수 있습니다.
+
+![실제 작업실 웹페이지 전체 화면](evidence/screenshots/web-full-18080.jpg)

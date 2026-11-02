@@ -21,6 +21,14 @@
       "scope": "VS Code Accounts menu; account identity only, no secret credentials",
       "observed": "damagez7788-cyber (GitHub) is displayed in the Accounts menu. Confirms VS Code GitHub sign-in. Does not prove platform submission or approval.",
       "sha256": "3c2427ffc558d0ac6e602b99e5c6496a1997d2b14e9e46c42f00b1514b855d33"
+    },
+    {
+      "file": "web-full-18080.jpg",
+      "url": "http://localhost:18080/",
+      "scope": "Full-page browser screenshot; excludes native browser address bar",
+      "observed": "Direct browser connection recovered after session reset. Live page has WORKSHOP_V1 and all page sections. This is a real screenshot, not a recreated browser frame.",
+      "verified_on": "2026-11-03",
+      "sha256": "125e36625906a6d40dca834a605322ce59c654ef78dd815d81ef027f91a4a040"
     }
   ],
   "native_address_bar_capture": "Tool stopped because it could not establish the Windows browser URL with enough confidence; no further UI input issued."
