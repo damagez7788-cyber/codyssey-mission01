@@ -1,0 +1,126 @@
+[2026-11-02T17:00:27.924144+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ uname -a
+Linux DESKTOP-1K2JO3L 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 GNU/Linux
+
+exit_code=0
+
+[2026-11-02T17:00:27.954604+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 26.04.1 LTS"
+NAME="Ubuntu"
+VERSION_ID="26.04"
+VERSION="26.04.1 LTS (Resolute Raccoon)"
+VERSION_CODENAME=resolute
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=resolute
+LOGO=ubuntu-logo
+
+exit_code=0
+
+[2026-11-02T17:00:27.962562+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ bash --version
+GNU bash, version 5.3.9(1)-release (x86_64-pc-linux-gnu)
+Copyright (C) 2025 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+
+This is free software; you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+exit_code=0
+
+[2026-11-02T17:00:27.969222+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ git --version
+git version 2.53.0
+
+exit_code=0
+
+[2026-11-02T17:00:27.973649+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker --version
+Docker version 29.9.2, build a82e528
+
+exit_code=0
+
+[2026-11-02T17:00:28.539813+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker info
+Client: Docker Engine - Community
+ Version:    29.9.2
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.38.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v5.7.0
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
+
+Server:
+ Containers: 2
+  Running: 1
+  Paused: 0
+  Stopped: 1
+ Images: 3
+ Server Version: 29.9.2
+ Storage Driver: overlayfs
+  driver-type: io.containerd.snapshotter.v1
+ Logging Driver: json-file
+ Cgroup Driver: systemd
+ Cgroup Version: 2
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+ CDI spec directories:
+  /etc/cdi
+  /var/run/cdi
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: b7a25261e029d68978bbf290df0a62fc819b3c51
+ runc version: v1.5.2-0-g29dd3dc2
+ init version: de40ad0
+ Security Options:
+  seccomp
+   Profile: builtin
+  cgroupns
+ Kernel Version: 6.18.54.1-microsoft-standard-WSL2
+ Operating System: Ubuntu 26.04.1 LTS
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 8
+ Total Memory: 7.535GiB
+ Name: DESKTOP-1K2JO3L
+ ID: d46f9f31-abd7-4640-9c29-0847570b087e
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+  ::1/128
+ Live Restore Enabled: false
+ Firewall Backend: iptables
+  EnableUserlandProxy: true
+  UserlandProxyPath: /usr/bin/docker-proxy
+
+
+exit_code=0
+
+[2026-11-02T17:00:29.020819+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ id damagez
+uid=1000(damagez) gid=1000(damagez) groups=1000(damagez),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users)
+
+exit_code=0
+

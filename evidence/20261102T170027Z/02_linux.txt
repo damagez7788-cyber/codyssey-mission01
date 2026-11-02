@@ -1,0 +1,91 @@
+[2026-11-02T17:00:29.032381+00:00] actor=jarvis-assisted; linux_user=damagez
+cwd=/home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z
+$ bash -c 'set -eux
+pwd
+mkdir notes archive
+touch empty.txt .hidden-note
+ls -la
+printf '"'"'Fresh mission verification\n'"'"' > notes/original.txt
+cat notes/original.txt
+cp notes/original.txt notes/copy.txt
+mv notes/copy.txt archive/renamed.txt
+ls -l notes archive
+cat archive/renamed.txt
+rm archive/renamed.txt
+ls -la archive
+chmod 644 notes/original.txt
+ls -l notes/original.txt
+chmod 600 notes/original.txt
+ls -l notes/original.txt
+chmod 755 archive
+ls -ld archive
+chmod 600 archive
+ls -ld archive
+'
+/home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z
+total 16
+drwxr-xr-x 4 damagez damagez 4096 Nov  3 02:00 .
+drwxr-xr-x 4 damagez damagez 4096 Nov  3 02:00 ..
+-rw-r--r-- 1 damagez damagez    0 Nov  3 02:00 .hidden-note
+drwxr-xr-x 2 damagez damagez 4096 Nov  3 02:00 archive
+-rw-r--r-- 1 damagez damagez    0 Nov  3 02:00 empty.txt
+drwxr-xr-x 2 damagez damagez 4096 Nov  3 02:00 notes
+Fresh mission verification
+archive:
+total 4
+-rw-r--r-- 1 damagez damagez 27 Nov  3 02:00 renamed.txt
+
+notes:
+total 4
+-rw-r--r-- 1 damagez damagez 27 Nov  3 02:00 original.txt
+Fresh mission verification
+total 8
+drwxr-xr-x 2 damagez damagez 4096 Nov  3 02:00 .
+drwxr-xr-x 4 damagez damagez 4096 Nov  3 02:00 ..
+-rw-r--r-- 1 damagez damagez 27 Nov  3 02:00 notes/original.txt
+-rw------- 1 damagez damagez 27 Nov  3 02:00 notes/original.txt
+drwxr-xr-x 2 damagez damagez 4096 Nov  3 02:00 archive
+drw------- 2 damagez damagez 4096 Nov  3 02:00 archive
++ pwd
++ mkdir notes archive
++ touch empty.txt .hidden-note
++ ls -la
++ printf 'Fresh mission verification\n'
++ cat notes/original.txt
++ cp notes/original.txt notes/copy.txt
++ mv notes/copy.txt archive/renamed.txt
++ ls -l notes archive
++ cat archive/renamed.txt
++ rm archive/renamed.txt
++ ls -la archive
++ chmod 644 notes/original.txt
++ ls -l notes/original.txt
++ chmod 600 notes/original.txt
++ ls -l notes/original.txt
++ chmod 755 archive
++ ls -ld archive
++ chmod 600 archive
++ ls -ld archive
+
+exit_code=0
+
+[2026-11-02T17:00:29.168572+00:00] actor=jarvis-assisted; linux_user=damagez
+cwd=/home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z
+$ bash -c 'cd archive'
+bash: line 1: cd: archive: Permission denied
+
+exit_code=1
+
+[2026-11-02T17:00:29.181171+00:00] actor=jarvis-assisted; linux_user=damagez
+cwd=/home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z
+$ chmod 755 archive
+
+exit_code=0
+
+[2026-11-02T17:00:29.196423+00:00] actor=jarvis-assisted; linux_user=damagez
+cwd=/home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z
+$ bash -c 'cd archive; pwd'
+/home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z/archive
+
+exit_code=0
+

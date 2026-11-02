@@ -1,0 +1,7 @@
+.git
+evidence
+docs
+README.md
+*.zip
+__pycache__
+.verification-lab

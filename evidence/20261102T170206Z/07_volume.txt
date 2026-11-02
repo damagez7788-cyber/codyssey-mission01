@@ -1,0 +1,80 @@
+[2026-11-02T17:02:39.752091+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker volume create jun-m01-20261102t170206z-data
+jun-m01-20261102t170206z-data
+
+exit_code=0
+
+[2026-11-02T17:02:40.211278+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -d --name jun-m01-20261102t170206z-writer --mount type=volume,src=jun-m01-20261102t170206z-data,dst=/data ubuntu:24.04 sleep infinity
+bbe2ab17976602ed6b953c71121c923f75dc6e7e2b2d58e74229d897deb6313d
+
+exit_code=0
+
+[2026-11-02T17:02:41.124043+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker exec jun-m01-20261102t170206z-writer bash -lc 'printf "persistent-workshop-data\n" > /data/note.txt; cat /data/note.txt'
+persistent-workshop-data
+
+exit_code=0
+
+[2026-11-02T17:02:41.664252+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker exec jun-m01-20261102t170206z-writer sha256sum /data/note.txt
+1ac123a97d636cf7220d4ba3d7b045857d820eee3ad33a216ebcb8651e56de73  /data/note.txt
+
+exit_code=0
+
+[2026-11-02T17:02:42.266809+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker stop jun-m01-20261102t170206z-writer
+jun-m01-20261102t170206z-writer
+
+exit_code=0
+
+[2026-11-02T17:02:52.946045+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker rm jun-m01-20261102t170206z-writer
+jun-m01-20261102t170206z-writer
+
+exit_code=0
+
+[2026-11-02T17:02:53.441314+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -d --name jun-m01-20261102t170206z-reader --mount type=volume,src=jun-m01-20261102t170206z-data,dst=/data,readonly ubuntu:24.04 sleep infinity
+975e5114a80684fa1fe2d219b6d5f920cc483e82117e80a56a3b3fabdbe02661
+
+exit_code=0
+
+[2026-11-02T17:02:54.404619+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker exec jun-m01-20261102t170206z-reader cat /data/note.txt
+persistent-workshop-data
+
+exit_code=0
+
+[2026-11-02T17:02:54.950055+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker exec jun-m01-20261102t170206z-reader sha256sum /data/note.txt
+1ac123a97d636cf7220d4ba3d7b045857d820eee3ad33a216ebcb8651e56de73  /data/note.txt
+
+exit_code=0
+
+[2026-11-02T17:02:55.535232+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker volume inspect jun-m01-20261102t170206z-data
+[
+    {
+        "CreatedAt": "2026-11-03T02:02:40+09:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/jun-m01-20261102t170206z-data/_data",
+        "Name": "jun-m01-20261102t170206z-data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+
+exit_code=0
+

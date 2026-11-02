@@ -1,0 +1,37 @@
+[
+  {
+    "name": "linux_operations_and_permissions",
+    "passed": true,
+    "detail": "Fresh CLI run; file 644 to 600; directory 755 to 600 to 755. Permission denial is an intentional experiment, not troubleshooting."
+  },
+  {
+    "name": "hello_world",
+    "passed": true,
+    "detail": "Official test image ran and exited."
+  },
+  {
+    "name": "ubuntu_exec_attach",
+    "passed": true,
+    "detail": "exec creates another shell; attach detached with Ctrl+P Ctrl+Q while main bash remained running."
+  },
+  {
+    "name": "web_port_18080",
+    "passed": true,
+    "detail": "Real HTTP header and page body captured."
+  },
+  {
+    "name": "health_18080",
+    "passed": true,
+    "detail": "Custom NGINX health endpoint."
+  },
+  {
+    "name": "web_port_18081",
+    "passed": true,
+    "detail": "Real HTTP header and page body captured."
+  },
+  {
+    "name": "health_18081",
+    "passed": true,
+    "detail": "Custom NGINX health endpoint."
+  }
+]

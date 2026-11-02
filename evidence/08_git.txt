@@ -1,0 +1,53 @@
+$ git init -b main
+Initialized empty Git repository in /home/damagez/codyssey-mission01/.git/
+
+exit_code=0
+
+$ git config user.name damagez7788-cyber
+
+exit_code=0
+
+$ git config user.email 350343401+damagez7788-cyber@users.noreply.github.com
+
+exit_code=0
+
+$ git config init.defaultBranch main
+
+exit_code=0
+
+$ git config --local --list
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+user.name=damagez7788-cyber
+user.email=350343401+damagez7788-cyber@users.noreply.github.com
+init.defaultbranch=main
+
+exit_code=0
+
+$ git branch --show-current
+main
+
+exit_code=0
+
+$ gh api user --jq {login: .login, id: .id}
+{"id":350343401,"login":"damagez7788-cyber"}
+
+exit_code=0
+
+$ git remote -v
+
+exit_code=0
+
+$ git status --short
+?? .dockerignore
+?? .gitignore
+?? Dockerfile
+?? docs/
+?? evidence/
+?? nginx/
+?? scripts/
+?? site/
+
+exit_code=0

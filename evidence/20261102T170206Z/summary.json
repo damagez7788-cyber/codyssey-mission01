@@ -1,0 +1,70 @@
+{
+  "run_id": "20261102T170206Z",
+  "actor": "jarvis-assisted",
+  "project_root": "/home/damagez/codyssey-mission01",
+  "image": "jun-workshop:20261102t170206z",
+  "ports": [
+    18080,
+    18081,
+    18082
+  ],
+  "container_prefix": "jun-m01-20261102t170206z",
+  "volume": "jun-m01-20261102t170206z-data",
+  "lab": "/home/damagez/codyssey-mission01/.verification-lab/20261102T170206Z",
+  "all_checks_passed": true,
+  "checks": [
+    {
+      "name": "linux_operations_and_permissions",
+      "passed": true,
+      "detail": "Fresh CLI run; file 644 to 600; directory 755 to 600 to 755. Permission denial is an intentional experiment, not troubleshooting."
+    },
+    {
+      "name": "hello_world",
+      "passed": true,
+      "detail": "Official test image ran and exited."
+    },
+    {
+      "name": "ubuntu_exec_attach",
+      "passed": true,
+      "detail": "exec creates another shell; attach detached with Ctrl+P Ctrl+Q while main bash remained running."
+    },
+    {
+      "name": "web_port_18080",
+      "passed": true,
+      "detail": "Real HTTP header and page body captured."
+    },
+    {
+      "name": "health_18080",
+      "passed": true,
+      "detail": "Custom NGINX health endpoint."
+    },
+    {
+      "name": "web_port_18081",
+      "passed": true,
+      "detail": "Real HTTP header and page body captured."
+    },
+    {
+      "name": "health_18081",
+      "passed": true,
+      "detail": "Custom NGINX health endpoint."
+    },
+    {
+      "name": "bind_change_reflected",
+      "passed": true,
+      "detail": "Host content change reflected without rebuild."
+    },
+    {
+      "name": "baked_image_unchanged",
+      "passed": true,
+      "detail": "COPY image is independent of the bind-mounted host file."
+    },
+    {
+      "name": "volume_persistence",
+      "passed": true,
+      "detail": "Container deleted; second container reads identical content and SHA-256."
+    }
+  ],
+  "github_pushed": false,
+  "platform_submitted": false,
+  "intentional_error_note": "Directory Permission denied was intentionally produced for required permission experiment."
+}

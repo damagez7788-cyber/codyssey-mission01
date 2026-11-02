@@ -1,0 +1,20 @@
+[2026-11-02T17:00:57.706640+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ cp -a /home/damagez/codyssey-mission01/site /home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z/bind-site
+
+exit_code=0
+
+[2026-11-02T17:00:57.711436+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -d --name jun-m01-20261102t170027z-bind -p 127.0.0.1:18082:80 --mount type=bind,src=/home/damagez/codyssey-mission01/.verification-lab/20261102T170027Z/bind-site,dst=/usr/share/nginx/html,readonly jun-workshop:20261102t170027z
+8e77b04a090d2057a4f2f57d1eea83726d67d1adb8be431e5d1ee422e8dc9cdd
+
+exit_code=0
+
+[2026-11-02T17:00:58.577248+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ curl --fail --silent --show-error --include http://127.0.0.1:18082/
+curl: (56) Recv failure: Connection reset by peer
+
+exit_code=56
+

@@ -1,0 +1,133 @@
+[2026-11-02T16:58:00.184497+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run --name jun-m01-20261102t165758z-hello hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+4f55086f7dd0: Pulling fs layer
+4f55086f7dd0: Download complete
+4f55086f7dd0: Pull complete
+d5e71e642bf5: Download complete
+Digest: sha256:c567b231f65614688711a75f31518a064258a51d442117a3e771a3a8fdba78ef
+Status: Downloaded newer image for hello-world:latest
+
+exit_code=0
+
+[2026-11-02T16:58:04.544097+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -dit --name jun-m01-20261102t165758z-ubuntu ubuntu:24.04 bash
+2d949ff62f954cf2eda8f7a0e05be4ba71701ee80e64827a7df0118664084c75
+Unable to find image 'ubuntu:24.04' locally
+24.04: Pulling from library/ubuntu
+7a48b8f0e5c7: Pulling fs layer
+7a48b8f0e5c7: Download complete
+98144013299c: Download complete
+7a48b8f0e5c7: Pull complete
+Digest: sha256:fe81560990fae86dc4743202b2cb4d3df98d0bcf949173cecef15ce1127ef852
+Status: Downloaded newer image for ubuntu:24.04
+
+exit_code=0
+
+[2026-11-02T16:58:11.574215+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker exec jun-m01-20261102t165758z-ubuntu bash -lc 'ls /; echo inside-ubuntu'
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+inside-ubuntu
+
+exit_code=0
+
+[2026-11-02T16:58:12.074322+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ python3 /home/damagez/codyssey-mission01/scripts/observe_attach.py jun-m01-20261102t165758z-ubuntu
+$ docker exec jun-m01-20261102t165758z-ubuntu bash -lc "echo EXEC_SHELL; exit"
+EXEC_SHELL
+Main process still running after exec exit: true
+$ docker attach jun-m01-20261102t165758z-ubuntu; echo ATTACH_MAIN_SHELL; [Ctrl+P Ctrl+Q]
+
+[K
+]0;root@2d949ff62f95: /root@2d949ff62f95:/# echo ATTACH_MAIN_SHELL
+[?2004l
+ATTACH_MAIN_SHELL
+[?2004h[K
+Main process running after detach: true
+
+exit_code=0
+
+[2026-11-02T16:58:16.425556+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker inspect --format '{{.State.Status}}' jun-m01-20261102t165758z-ubuntu
+running
+
+exit_code=0
+
+[2026-11-02T16:58:16.763154+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker stop jun-m01-20261102t165758z-ubuntu
+jun-m01-20261102t165758z-ubuntu
+
+exit_code=0
+
+[2026-11-02T16:58:27.426699+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker start jun-m01-20261102t165758z-ubuntu
+jun-m01-20261102t165758z-ubuntu
+
+exit_code=0
+
+[2026-11-02T16:58:28.034633+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker image ls
+IMAGE                ID             DISK USAGE   CONTENT SIZE   EXTRA
+hello-world:latest   c567b231f656       25.9kB         9.49kB   U    
+ubuntu:24.04         fe81560990fa        119MB         31.7MB   U    
+
+exit_code=0
+
+[2026-11-02T16:58:28.513838+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker ps -a
+CONTAINER ID   IMAGE          COMMAND    CREATED          STATUS                      PORTS     NAMES
+2d949ff62f95   ubuntu:24.04   "bash"     18 seconds ago   Up 1 second                           jun-m01-20261102t165758z-ubuntu
+7ebddd6ec08b   hello-world    "/hello"   25 seconds ago   Exited (0) 24 seconds ago             jun-m01-20261102t165758z-hello
+
+exit_code=0
+

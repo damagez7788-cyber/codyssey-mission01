@@ -1,0 +1,17 @@
+[
+  {
+    "name": "linux_operations_and_permissions",
+    "passed": true,
+    "detail": "Fresh CLI run; file 644 to 600; directory 755 to 600 to 755. Permission denial is an intentional experiment, not troubleshooting."
+  },
+  {
+    "name": "hello_world",
+    "passed": true,
+    "detail": "Official test image ran and exited."
+  },
+  {
+    "name": "ubuntu_exec_attach",
+    "passed": true,
+    "detail": "exec creates another shell; attach detached with Ctrl+P Ctrl+Q while main bash remained running."
+  }
+]

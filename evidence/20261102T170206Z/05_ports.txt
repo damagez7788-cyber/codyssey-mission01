@@ -1,0 +1,206 @@
+[2026-11-02T17:02:33.599790+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -d --name jun-m01-20261102t170206z-web-a -p 127.0.0.1:18080:80 jun-workshop:20261102t170206z
+5ed09f2d853694f62024f0bbdb4fdff24faf74fa6b768d4ef6f400deef4fc4ff
+
+exit_code=0
+
+[2026-11-02T17:02:34.584240+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -d --name jun-m01-20261102t170206z-web-b -p 127.0.0.1:18081:80 jun-workshop:20261102t170206z
+c205dab32063838fcffb123c3b870a6037753887049e9ec3a85707168315b66a
+
+exit_code=0
+
+[2026-11-02T17:02:35.560808+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ curl --fail --silent --show-error --retry 10 --retry-all-errors --retry-delay 1 --max-time 3 http://127.0.0.1:18080/health
+workshop-ready
+
+exit_code=0
+
+[2026-11-02T17:02:35.587284+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ curl --fail --silent --show-error --include http://127.0.0.1:18080/
+HTTP/1.1 200 OK
+Server: nginx/1.30.6
+Date: Mon, 02 Nov 2026 17:02:35 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3938
+Last-Modified: Mon, 02 Nov 2026 16:53:40 GMT
+Connection: keep-alive
+ETag: "6ae8c014-f62"
+Cache-Control: no-store
+Accept-Ranges: bytes
+
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Ubuntu에서 Docker와 Git까지, 준짱의 첫 개발 작업실 학습 노트">
+  <title>Jun Workshop · 첫 개발 작업실</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#home"><span>J</span> JUN WORKSHOP</a><span class="label">CODYSSEY · MISSION 01</span></header>
+  <main id="home">
+    <section class="hero">
+      <div><p class="eyebrow">나의 첫 번째 개발 작업실</p><h1>작은 명령에서<br><em>실행되는 환경까지.</em></h1><p class="intro">폴더를 만들고, 서버를 띄우고, 변경을 기록합니다.<br>배운 내용을 내 말로 설명하기 위한 작업실 노트입니다.</p><a class="button" href="#notes">작업실 둘러보기 <span aria-hidden="true">↗</span></a></div>
+      <aside class="terminal" aria-label="개발 흐름 설명 예시"><div class="terminal-head"><span>● ● ●</span> workshop / bash</div><pre><span class="muted"># 이 화면은 학습 흐름 예시입니다</span>
+<b>$</b> pwd
+/home/damagez/mission01
+
+<b>$</b> docker build -t jun-workshop:1.0 .
+<span class="muted">이미지를 만들고 실행 환경을 준비합니다</span>
+
+<b>$</b> git commit -m "Build my workshop"
+<span class="muted">변경 내용을 내 컴퓨터에 기록합니다</span></pre><div class="version">CONTENT VERSION <strong id="content-version">WORKSHOP_V1</strong></div></aside>
+    </section>
+    <section id="notes" class="notes"><div class="section-top"><div><p class="eyebrow">THREE BUILDING BLOCKS</p><h2>작업실을 이루는 세 가지</h2></div><p>명령어의 목적과 결과를 연결합니다.</p></div>
+      <div class="cards">
+        <article><span class="number">01 / TERMINAL</span><h3>파일을 다루는 말</h3><p>현재 위치를 확인하고 파일을 생성·복사·이동합니다. 권한은 누가 읽고 쓰고 실행할 수 있는지 정합니다.</p><code>pwd · ls · cp · mv · chmod</code><button type="button" data-note="terminal">핵심 개념 보기</button></article>
+        <article><span class="number">02 / DOCKER</span><h3>다시 실행할 수 있는 환경</h3><p>이미지로 환경을 묶고 컨테이너로 실행합니다. 포트는 접속을, 마운트와 볼륨은 파일 연결과 유지를 맡습니다.</p><code>build · run · logs · volume</code><button type="button" data-note="docker">핵심 개념 보기</button></article>
+        <article><span class="number">03 / GIT</span><h3>변경에 남기는 기록</h3><p>저장한 파일 중 기록할 변경을 선택합니다. 로컬 commit과 GitHub push는 서로 다른 단계입니다.</p><code>status · add · commit · push</code><button type="button" data-note="git">핵심 개념 보기</button></article>
+      </div>
+      <div class="note-detail" aria-live="polite"><span>QUICK NOTE</span><p id="note-text">위 카드의 버튼을 누르면 핵심 개념을 짧게 확인할 수 있습니다.</p></div>
+    </section>
+    <section class="flow"><p class="eyebrow">FROM FILE TO SERVICE</p><h2>파일 하나가 웹페이지가 되기까지</h2><ol><li><b>01</b><strong>작성</strong><span>HTML과 설정 저장</span></li><li><b>02</b><strong>제작</strong><span>Dockerfile로 이미지 빌드</span></li><li><b>03</b><strong>실행</strong><span>컨테이너와 포트 연결</span></li><li><b>04</b><strong>검증</strong><span>접속·변경·데이터 확인</span></li><li><b>05</b><strong>기록</strong><span>Git과 README에 정리</span></li></ol></section>
+  </main>
+  <footer><span>JUN WORKSHOP / FIRST STEPS</span><p>이 웹페이지는 학습 노트입니다. 실제 검증 결과는 저장소의 README와 evidence 폴더에서 확인합니다.</p></footer>
+</body>
+</html>
+
+exit_code=0
+
+[2026-11-02T17:02:35.611722+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ curl --fail --silent --show-error --include http://127.0.0.1:18080/health
+HTTP/1.1 200 OK
+Server: nginx/1.30.6
+Date: Mon, 02 Nov 2026 17:02:35 GMT
+Content-Type: text/plain; charset=utf-8
+Content-Length: 15
+Connection: keep-alive
+
+workshop-ready
+
+exit_code=0
+
+[2026-11-02T17:02:35.635619+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ curl --fail --silent --show-error --retry 10 --retry-all-errors --retry-delay 1 --max-time 3 http://127.0.0.1:18081/health
+workshop-ready
+
+exit_code=0
+
+[2026-11-02T17:02:35.656434+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ curl --fail --silent --show-error --include http://127.0.0.1:18081/
+HTTP/1.1 200 OK
+Server: nginx/1.30.6
+Date: Mon, 02 Nov 2026 17:02:35 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3938
+Last-Modified: Mon, 02 Nov 2026 16:53:40 GMT
+Connection: keep-alive
+ETag: "6ae8c014-f62"
+Cache-Control: no-store
+Accept-Ranges: bytes
+
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Ubuntu에서 Docker와 Git까지, 준짱의 첫 개발 작업실 학습 노트">
+  <title>Jun Workshop · 첫 개발 작업실</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#home"><span>J</span> JUN WORKSHOP</a><span class="label">CODYSSEY · MISSION 01</span></header>
+  <main id="home">
+    <section class="hero">
+      <div><p class="eyebrow">나의 첫 번째 개발 작업실</p><h1>작은 명령에서<br><em>실행되는 환경까지.</em></h1><p class="intro">폴더를 만들고, 서버를 띄우고, 변경을 기록합니다.<br>배운 내용을 내 말로 설명하기 위한 작업실 노트입니다.</p><a class="button" href="#notes">작업실 둘러보기 <span aria-hidden="true">↗</span></a></div>
+      <aside class="terminal" aria-label="개발 흐름 설명 예시"><div class="terminal-head"><span>● ● ●</span> workshop / bash</div><pre><span class="muted"># 이 화면은 학습 흐름 예시입니다</span>
+<b>$</b> pwd
+/home/damagez/mission01
+
+<b>$</b> docker build -t jun-workshop:1.0 .
+<span class="muted">이미지를 만들고 실행 환경을 준비합니다</span>
+
+<b>$</b> git commit -m "Build my workshop"
+<span class="muted">변경 내용을 내 컴퓨터에 기록합니다</span></pre><div class="version">CONTENT VERSION <strong id="content-version">WORKSHOP_V1</strong></div></aside>
+    </section>
+    <section id="notes" class="notes"><div class="section-top"><div><p class="eyebrow">THREE BUILDING BLOCKS</p><h2>작업실을 이루는 세 가지</h2></div><p>명령어의 목적과 결과를 연결합니다.</p></div>
+      <div class="cards">
+        <article><span class="number">01 / TERMINAL</span><h3>파일을 다루는 말</h3><p>현재 위치를 확인하고 파일을 생성·복사·이동합니다. 권한은 누가 읽고 쓰고 실행할 수 있는지 정합니다.</p><code>pwd · ls · cp · mv · chmod</code><button type="button" data-note="terminal">핵심 개념 보기</button></article>
+        <article><span class="number">02 / DOCKER</span><h3>다시 실행할 수 있는 환경</h3><p>이미지로 환경을 묶고 컨테이너로 실행합니다. 포트는 접속을, 마운트와 볼륨은 파일 연결과 유지를 맡습니다.</p><code>build · run · logs · volume</code><button type="button" data-note="docker">핵심 개념 보기</button></article>
+        <article><span class="number">03 / GIT</span><h3>변경에 남기는 기록</h3><p>저장한 파일 중 기록할 변경을 선택합니다. 로컬 commit과 GitHub push는 서로 다른 단계입니다.</p><code>status · add · commit · push</code><button type="button" data-note="git">핵심 개념 보기</button></article>
+      </div>
+      <div class="note-detail" aria-live="polite"><span>QUICK NOTE</span><p id="note-text">위 카드의 버튼을 누르면 핵심 개념을 짧게 확인할 수 있습니다.</p></div>
+    </section>
+    <section class="flow"><p class="eyebrow">FROM FILE TO SERVICE</p><h2>파일 하나가 웹페이지가 되기까지</h2><ol><li><b>01</b><strong>작성</strong><span>HTML과 설정 저장</span></li><li><b>02</b><strong>제작</strong><span>Dockerfile로 이미지 빌드</span></li><li><b>03</b><strong>실행</strong><span>컨테이너와 포트 연결</span></li><li><b>04</b><strong>검증</strong><span>접속·변경·데이터 확인</span></li><li><b>05</b><strong>기록</strong><span>Git과 README에 정리</span></li></ol></section>
+  </main>
+  <footer><span>JUN WORKSHOP / FIRST STEPS</span><p>이 웹페이지는 학습 노트입니다. 실제 검증 결과는 저장소의 README와 evidence 폴더에서 확인합니다.</p></footer>
+</body>
+</html>
+
+exit_code=0
+
+[2026-11-02T17:02:35.675799+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ curl --fail --silent --show-error --include http://127.0.0.1:18081/health
+HTTP/1.1 200 OK
+Server: nginx/1.30.6
+Date: Mon, 02 Nov 2026 17:02:35 GMT
+Content-Type: text/plain; charset=utf-8
+Content-Length: 15
+Connection: keep-alive
+
+workshop-ready
+
+exit_code=0
+
+[2026-11-02T17:02:35.695142+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker logs jun-m01-20261102t170206z-web-a
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+172.17.0.1 - - [02/Nov/2026:17:02:35 +0000] "GET /health HTTP/1.1" 200 15 "-" "curl/8.18.0" "-"
+172.17.0.1 - - [02/Nov/2026:17:02:35 +0000] "GET / HTTP/1.1" 200 3938 "-" "curl/8.18.0" "-"
+172.17.0.1 - - [02/Nov/2026:17:02:35 +0000] "GET /health HTTP/1.1" 200 15 "-" "curl/8.18.0" "-"
+2026/11/02 17:02:34 [notice] 1#1: using the "epoll" event method
+2026/11/02 17:02:34 [notice] 1#1: nginx/1.30.6
+2026/11/02 17:02:34 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+2026/11/02 17:02:34 [notice] 1#1: OS: Linux 6.18.54.1-microsoft-standard-WSL2
+2026/11/02 17:02:34 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1024:1048576
+2026/11/02 17:02:34 [notice] 1#1: start worker processes
+2026/11/02 17:02:34 [notice] 1#1: start worker process 29
+2026/11/02 17:02:34 [notice] 1#1: start worker process 30
+2026/11/02 17:02:34 [notice] 1#1: start worker process 31
+2026/11/02 17:02:34 [notice] 1#1: start worker process 32
+2026/11/02 17:02:34 [notice] 1#1: start worker process 33
+2026/11/02 17:02:34 [notice] 1#1: start worker process 34
+2026/11/02 17:02:34 [notice] 1#1: start worker process 35
+2026/11/02 17:02:34 [notice] 1#1: start worker process 36
+
+exit_code=0
+
+[2026-11-02T17:02:36.148996+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker stats --no-stream jun-m01-20261102t170206z-web-a
+CONTAINER ID   NAME                             CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O     PIDS
+5ed09f2d8536   jun-m01-20261102t170206z-web-a   0.00%     8.789MiB / 7.535GiB   0.11%     2.25kB / 5.62kB   0B / 8.19kB   9
+
+exit_code=0
+

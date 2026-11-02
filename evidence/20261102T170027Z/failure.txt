@@ -1,0 +1,1 @@
+RuntimeError: Unexpected exit 56: curl --fail --silent --show-error --include http://127.0.0.1:18082/

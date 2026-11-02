@@ -1,0 +1,120 @@
+[2026-11-02T17:00:29.208836+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run --name jun-m01-20261102t170027z-hello hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+
+exit_code=0
+
+[2026-11-02T17:00:30.323309+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -dit --name jun-m01-20261102t170027z-ubuntu ubuntu:24.04 bash
+4033cffd128845dd5040e0a94d5990afb8e7d0a6333da58ebeb949bbbabc9af5
+
+exit_code=0
+
+[2026-11-02T17:00:31.058583+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker exec jun-m01-20261102t170027z-ubuntu bash -lc 'ls /; echo inside-ubuntu'
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+inside-ubuntu
+
+exit_code=0
+
+[2026-11-02T17:00:31.550538+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ python3 /home/damagez/codyssey-mission01/scripts/observe_attach.py jun-m01-20261102t170027z-ubuntu
+$ docker exec jun-m01-20261102t170027z-ubuntu bash -lc "echo EXEC_SHELL; exit"
+EXEC_SHELL
+Main process still running after exec exit: true
+$ docker attach jun-m01-20261102t170027z-ubuntu; echo ATTACH_MAIN_SHELL; [Ctrl+P Ctrl+Q]
+
+[K
+]0;root@4033cffd1288: /root@4033cffd1288:/# echo ATTACH_MAIN_SHELL
+[?2004l
+ATTACH_MAIN_SHELL
+[?2004h[K
+Main process running after detach: true
+
+exit_code=0
+
+[2026-11-02T17:00:35.843208+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker inspect --format '{{.State.Status}}' jun-m01-20261102t170027z-ubuntu
+running
+
+exit_code=0
+
+[2026-11-02T17:00:36.280989+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker stop jun-m01-20261102t170027z-ubuntu
+jun-m01-20261102t170027z-ubuntu
+
+exit_code=0
+
+[2026-11-02T17:00:46.905302+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker start jun-m01-20261102t170027z-ubuntu
+jun-m01-20261102t170027z-ubuntu
+
+exit_code=0
+
+[2026-11-02T17:00:47.552257+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker image ls
+IMAGE                           ID             DISK USAGE   CONTENT SIZE   EXTRA
+hello-world:latest              c567b231f656       25.9kB         9.49kB   U    
+jun-workshop:20261102t165758z   c1af4c4a1231       92.7MB         26.1MB        
+ubuntu:24.04                    fe81560990fa        119MB         31.7MB   U    
+
+exit_code=0
+
+[2026-11-02T17:00:48.005613+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker ps -a
+CONTAINER ID   IMAGE          COMMAND    CREATED          STATUS                      PORTS     NAMES
+4033cffd1288   ubuntu:24.04   "bash"     18 seconds ago   Up 1 second                           jun-m01-20261102t170027z-ubuntu
+d880b11c694e   hello-world    "/hello"   19 seconds ago   Exited (0) 18 seconds ago             jun-m01-20261102t170027z-hello
+2d949ff62f95   ubuntu:24.04   "bash"     2 minutes ago    Up 2 minutes                          jun-m01-20261102t165758z-ubuntu
+7ebddd6ec08b   hello-world    "/hello"   2 minutes ago    Exited (0) 2 minutes ago              jun-m01-20261102t165758z-hello
+
+exit_code=0
+

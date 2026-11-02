@@ -1,0 +1,1 @@
+RuntimeError: Unexpected exit 1: docker image inspect nginx:stable-alpine

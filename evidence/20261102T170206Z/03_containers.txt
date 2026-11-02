@@ -1,0 +1,127 @@
+[2026-11-02T17:02:07.676703+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run --name jun-m01-20261102t170206z-hello hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+
+exit_code=0
+
+[2026-11-02T17:02:08.820948+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker run -dit --name jun-m01-20261102t170206z-ubuntu ubuntu:24.04 bash
+8d0963b469d17e0b5702d851d7b8c37b2d5a03b836b6570403d98f8d24afe30e
+
+exit_code=0
+
+[2026-11-02T17:02:09.737520+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker exec jun-m01-20261102t170206z-ubuntu bash -lc 'ls /; echo inside-ubuntu'
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+inside-ubuntu
+
+exit_code=0
+
+[2026-11-02T17:02:10.277891+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ python3 /home/damagez/codyssey-mission01/scripts/observe_attach.py jun-m01-20261102t170206z-ubuntu
+$ docker exec jun-m01-20261102t170206z-ubuntu bash -lc "echo EXEC_SHELL; exit"
+EXEC_SHELL
+Main process still running after exec exit: true
+$ docker attach jun-m01-20261102t170206z-ubuntu; echo ATTACH_MAIN_SHELL; [Ctrl+P Ctrl+Q]
+
+[K
+]0;root@8d0963b469d1: /root@8d0963b469d1:/# echo ATTACH_MAIN_SHELL
+[?2004l
+ATTACH_MAIN_SHELL
+[?2004h[K
+Main process running after detach: true
+
+exit_code=0
+
+[2026-11-02T17:02:14.963083+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker inspect --format '{{.State.Status}}' jun-m01-20261102t170206z-ubuntu
+running
+
+exit_code=0
+
+[2026-11-02T17:02:15.450848+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker stop jun-m01-20261102t170206z-ubuntu
+jun-m01-20261102t170206z-ubuntu
+
+exit_code=0
+
+[2026-11-02T17:02:26.138303+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker start jun-m01-20261102t170206z-ubuntu
+jun-m01-20261102t170206z-ubuntu
+
+exit_code=0
+
+[2026-11-02T17:02:26.852282+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker image ls
+IMAGE                           ID             DISK USAGE   CONTENT SIZE   EXTRA
+hello-world:latest              c567b231f656       25.9kB         9.49kB   U    
+jun-workshop:20261102t165758z   c1af4c4a1231       92.7MB         26.1MB   U    
+jun-workshop:20261102t170027z   829d455949c6       92.7MB         26.1MB   U    
+nginx:stable-alpine             0e52bd054126       93.5MB           27MB        
+ubuntu:24.04                    fe81560990fa        119MB         31.7MB   U    
+
+exit_code=0
+
+[2026-11-02T17:02:27.883082+00:00] actor=jarvis-assisted; linux_user=root
+cwd=/home/damagez/codyssey-mission01
+$ docker ps -a
+CONTAINER ID   IMAGE                           COMMAND                  CREATED              STATUS                          PORTS     NAMES
+8d0963b469d1   ubuntu:24.04                    "bash"                   19 seconds ago       Up 1 second                               jun-m01-20261102t170206z-ubuntu
+08fb865c1c0e   hello-world                     "/hello"                 20 seconds ago       Exited (0) 19 seconds ago                 jun-m01-20261102t170206z-hello
+8e77b04a090d   jun-workshop:20261102t170027z   "/docker-entrypoint.…"   About a minute ago   Exited (0) 39 seconds ago                 jun-m01-20261102t170027z-bind
+50044163c04b   jun-workshop:20261102t170027z   "/docker-entrypoint.…"   About a minute ago   Exited (0) 39 seconds ago                 jun-m01-20261102t170027z-web-b
+976a5a5f876a   jun-workshop:20261102t170027z   "/docker-entrypoint.…"   About a minute ago   Exited (0) 39 seconds ago                 jun-m01-20261102t170027z-web-a
+4033cffd1288   ubuntu:24.04                    "bash"                   About a minute ago   Up About a minute                         jun-m01-20261102t170027z-ubuntu
+d880b11c694e   hello-world                     "/hello"                 About a minute ago   Exited (0) About a minute ago             jun-m01-20261102t170027z-hello
+2d949ff62f95   ubuntu:24.04                    "bash"                   4 minutes ago        Up 4 minutes                              jun-m01-20261102t165758z-ubuntu
+7ebddd6ec08b   hello-world                     "/hello"                 4 minutes ago        Exited (0) 4 minutes ago                  jun-m01-20261102t165758z-hello
+
+exit_code=0
+
