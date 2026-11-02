@@ -2,7 +2,7 @@
 
 코디세이 개인 필수 미션 **내 컴퓨터에 개발자용 작업실 꾸미기**의 요구사항에 맞춘 정적 웹 서버 프로젝트입니다. Ubuntu CLI, 파일·디렉터리 권한, Dockerfile, 포트 매핑, 바인드 마운트, 볼륨을 실제로 검증했습니다.
 
-**현재 상태:** 새 프로젝트의 실행 검증 10개 통과. 로컬 Git 설정과 전용 비공개 GitHub 저장소 업로드를 완료했습니다. 2026-11-03 사용자 요청으로 지금은 업로드까지만 진행하며, 공개 전환과 코디세이 평가 신청은 나중에 진행합니다. VS Code의 GitHub 로그인 증거와 주소창을 포함한 브라우저 캡처는 추가 확인이 필요합니다. 이 상태를 미션 최종 통과로 표시하지 않습니다.
+**현재 상태:** 새 프로젝트의 실행 검증 10개 통과. 로컬 Git 설정과 전용 비공개 GitHub 저장소 업로드를 완료했습니다. 2026-11-03 사용자 요청으로 지금은 업로드까지만 진행하며, 공개 전환과 코디세이 평가 신청은 나중에 진행합니다. VS Code의 GitHub 계정 로그인과 Ubuntu 프로젝트 열기를 확인했습니다. 주소창을 포함한 브라우저 캡처는 추가 확인이 필요합니다. 이 상태를 미션 최종 통과로 표시하지 않습니다.
 
 이 저장소에는 이전 학습 연습 파일·화면을 포함하지 않았습니다. 새 프로젝트 코드 작성과 검증은 자비스의 지원으로 수행했으며, 로그의 `actor=jarvis-assisted`로 실행 주체를 표시했습니다.
 
@@ -102,7 +102,7 @@ sudo python3 scripts/verify.py --actor evaluator --owner "$(id -un)"
 | Git 작성자·기본 브랜치 | 확인 | [로컬 설정](evidence/08_git.txt) |
 | 실제 문제 해결 2건 이상 | 확인 | [문제 해결 기록](docs/troubleshooting.md) 및 원래 실패 로그 |
 | GitHub에 이번 저장소 push | 확인 | [전용 비공개 저장소](https://github.com/damagez7788-cyber/codyssey-mission01), main 브랜치. [업로드 확인 로그](evidence/09_github_upload.txt) |
-| VS Code에서 GitHub 로그인·이번 저장소 연결 | 일부 확인 | VS Code 및 WSL 확장 설치, Ubuntu 프로젝트 폴더 열기 확인. GitHub 로그인 완료 증거는 미확인 |
+| VS Code에서 GitHub 로그인·이번 저장소 연결 | 확인 | VS Code 및 WSL 확장 설치, Ubuntu 프로젝트와 main 브랜치 열기 확인. [계정 메뉴 화면](evidence/screenshots/vscode-github-account.png)에 damagez7788-cyber (GitHub) 표시 |
 | 주소창과 포트가 보이는 브라우저 캡처 | 미완료 | viewport 화면과 curl 증거 확보. Windows 주소창 캡처는 자동 도구 중단 |
 | 코디세이 평가 요청 | 사용자 요청으로 보류 | 미션 시작 신청 완료 안내 확인. 평가 신청은 하지 않음. 공개 전환도 나중에 진행 |
 
@@ -158,3 +158,9 @@ writer 컨테이너를 중지·삭제한 뒤 reader 컨테이너에서 같은 �
 전용 저장소 [damagez7788-cyber/codyssey-mission01](https://github.com/damagez7788-cyber/codyssey-mission01)의 `main` 브랜치에 업로드했습니다. 현재 공개 범위는 **비공개**입니다. 2026-11-03 사용자 요청에 따라 공개 전환과 평가 신청은 보류합니다. 평가 전에 남은 화면 증거를 보완하고, 저장소 접근 및 플랫폼 연결을 확인해야 합니다. 코디세이의 저장소 선택 목록에서 새 비공개 저장소가 표시되는 것은 아직 확인하지 못했습니다.
 
 [원문 요구사항 대조](docs/requirements.md), [작성 지원 범위](docs/작성지원_및_검증범위.txt), [전체 명령어 해석](docs/commands.md)을 함께 확인합니다.
+
+## 9 VS Code GitHub 로그인 확인
+
+2026-11-03 사용자가 제공한 실제 VS Code 계정 메뉴 화면에서 `damagez7788-cyber (GitHub)`를 확인했습니다. 이 화면은 GitHub 로그인 완료의 증거입니다. 별도로 VS Code에서 `codyssey-mission01 [WSL: Ubuntu]` 프로젝트와 `main` 브랜치가 열린 것을 확인했고, GitHub 업로드는 실제 push와 원격 브랜치 해시 비교로 검증했습니다. 설정 동기화나 Remote Tunnel 같은 추가 기능의 활성화를 주장하지 않습니다.
+
+![VS Code 계정 메뉴의 GitHub 로그인 확인](evidence/screenshots/vscode-github-account.png)

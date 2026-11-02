@@ -14,6 +14,13 @@
       "scope": "browser viewport, no address bar",
       "observed": "WORKSHOP_V2 displayed after host bind content change.",
       "sha256": "92b5aba88ccb4aa3c74b4218e4d420161769d59583a5d56814b8f99f1df10b2a"
+    },
+    {
+      "file": "vscode-github-account.png",
+      "source": "User-provided screenshot in the Codyssey chat, 2026-11-03",
+      "scope": "VS Code Accounts menu; account identity only, no secret credentials",
+      "observed": "damagez7788-cyber (GitHub) is displayed in the Accounts menu. Confirms VS Code GitHub sign-in. Does not prove platform submission or approval.",
+      "sha256": "3c2427ffc558d0ac6e602b99e5c6496a1997d2b14e9e46c42f00b1514b855d33"
     }
   ],
   "native_address_bar_capture": "Tool stopped because it could not establish the Windows browser URL with enough confidence; no further UI input issued."
