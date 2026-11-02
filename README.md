@@ -33,7 +33,7 @@
 | 실제 프로젝트 경로 | `/home/damagez/codyssey-mission01` |
 | 실행 지원 | `jarvis-assisted`. 권한 실험은 일반 사용자 `damagez`, Docker 검증은 root |
 
-[환경 점검 명령과 실제 출력](evidence/20261102T170206Z/01_environment.txt), [로컬 Git 설정 및 GitHub CLI 계정 확인](evidence/08_git.txt)
+[환경 점검 명령과 실제 출력](evidence/20261102T170206Z/01_environment.txt), [로컬 Git 설정 및 GitHub CLI 계정 확인](evidence/08_git.txt), [실제 로컬 commit 이력](docs/git_history.md)
 
 Docker Desktop 대신 Ubuntu 안에 Docker 공식 패키지 저장소의 Docker Engine을 설치해 사용했습니다. 현재 엔진을 실행해 두었으며, Docker 그룹 권한이나 광범위한 사용자 권한을 새로 부여하지 않았습니다.
 
