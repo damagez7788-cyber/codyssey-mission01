@@ -4,9 +4,9 @@
 
 코디세이 개인 필수 미션 **내 컴퓨터에 개발자용 작업실 꾸미기**의 제출 프로젝트입니다. Ubuntu에서 개발 작업 환경을 구성하고, 커스텀 NGINX 이미지로 Jun Workshop 웹페이지를 실행했습니다. 이 문서는 강준권의 제출 프로젝트가 구현한 내용과 Ubuntu CLI, 파일·디렉터리 권한, Dockerfile, 포트 매핑, 바인드 마운트, 볼륨의 실제 검증 결과를 설명합니다.
 
-**현재 상태:** 새 프로젝트의 실행 검증 10개 통과. 로컬 Git 설정과 전용 GitHub 저장소 업로드를 완료했습니다. 2026-11-03 공개 저장소인 것을 GitHub 조회로 확인했습니다. 이번 작업은 사전평가 지적 자료 보완과 재업로드이며, 동료평가 요청은 하지 않았습니다. VS Code의 GitHub 계정 로그인과 Ubuntu 프로젝트 열기를 확인했습니다. 사용자가 제공한 Chrome 원본 화면에서 주소창의 localhost:18080과 실제 페이지를 함께 확인했습니다. 이 상태를 미션 최종 통과로 표시하지 않습니다.
+**현재 상태:** 실행 검증 10개 항목과 로컬 Git 설정, GitHub 저장소 업로드를 확인했습니다. 2026-11-03 기준 저장소는 공개 상태입니다. VS Code의 GitHub 로그인·프로젝트 연결 화면과 주소창이 포함된 Chrome 접속 화면을 증거로 제공합니다. 실행 검증 결과와 코디세이의 최종 평가 결과는 별도로 구분합니다.
 
-이 저장소에는 이전 학습 연습 파일·화면을 포함하지 않았습니다. 새 프로젝트 코드 작성과 검증은 자비스의 지원으로 수행했으며, 로그의 `actor=jarvis-assisted`로 실행 주체를 표시했습니다.
+이 저장소에는 본 미션을 위해 구성한 프로젝트와 검증 자료를 포함합니다. 프로젝트 코드 작성과 실행 검증에는 AI 도구를 활용했습니다. 지원 범위는 [별도 문서](docs/작성지원_및_검증범위.txt)에 정리했으며, 원문 로그의 `actor=jarvis-assisted`는 AI 도구의 지원으로 실행한 기록임을 나타냅니다.
 
 **검증 범위:** 아래의 ‘확인’은 제출자료와 실제 실행 기록을 대조한 결과입니다. Dockerfile 기반 이미지 빌드·실행, 포트 접속, 바인드 마운트 변경 반영 및 볼륨 데이터 유지를 검증했습니다. 선택 보너스 5개 항목의 수행 증거는 포함하지 않습니다.
 
@@ -313,8 +313,8 @@ sudo python3 scripts/verify.py --actor evaluator --owner "$(id -un)"
 | 실제 문제 해결 2건 이상 | 확인 | [문제 해결 기록](docs/troubleshooting.md) 및 원래 실패 로그 |
 | GitHub에 이번 저장소 push | 확인 | [전용 저장소](https://github.com/damagez7788-cyber/codyssey-mission01), main 브랜치. [업로드 확인 로그](evidence/09_github_upload.txt) |
 | VS Code에서 GitHub 로그인·이번 저장소 연결 | 확인 | VS Code 및 WSL 확장 설치, Ubuntu 프로젝트와 main 브랜치 열기 확인. [계정 메뉴 화면](evidence/screenshots/vscode-github-account.png)에 damagez7788-cyber (GitHub) 표시 |
-| 주소창과 포트가 보이는 브라우저 캡처 | 확인 | [Chrome 주소창과 실제 페이지](evidence/screenshots/chrome-addressbar-18080.png). 사용자 제공 원본이며 localhost:18080과 WORKSHOP_V1이 함께 보임 |
-| 코디세이 평가 요청 | 동료평가 신청 보류 | 공개 저장소 및 사용자 제공 네이토 사전평가 결과 확인. 이번 문서 보완에서 동료평가 신청은 하지 않음 |
+| 주소창과 포트가 보이는 브라우저 캡처 | 확인 | [Chrome 주소창과 실제 페이지](evidence/screenshots/chrome-addressbar-18080.png). Chrome 원본 캡처에서 localhost:18080과 WORKSHOP_V1을 함께 확인 |
+| 코디세이 평가 | 플랫폼에서 별도 확인 | 네이토 사전평가와 동료평가는 저장소의 실행 검증과 별도의 절차 |
 
 기능 요구사항의 curl 응답 로그와 증거 수집 제약의 주소창 포함 화면을 함께 제공합니다. Chrome 원본 캡처의 localhost:18080, 웹페이지의 WORKSHOP_V1, 기존 포트 매핑 로그를 대조할 수 있습니다.
 
@@ -365,13 +365,13 @@ writer 컨테이너를 중지·삭제한 뒤 reader 컨테이너에서 같은 �
 
 미션 원문은 GitHub Repository 링크로 제출하고, README에서 모든 수행 결과에 접근할 수 있어야 한다고 명시합니다. 이 폴더의 파일을 전용 저장소에 올린 뒤 저장소 접근 권한과 코디세이 코드저장소 연결을 확인해야 합니다.
 
-전용 저장소 [damagez7788-cyber/codyssey-mission01](https://github.com/damagez7788-cyber/codyssey-mission01)의 `main` 브랜치에 업로드했습니다. 현재 공개 범위는 **공개**입니다. 이번 보완 작업에서 동료평가 신청은 하지 않았습니다. 추가 화면 증거 보완은 마쳤으며, 평가 전에는 저장소 접근 및 플랫폼 연결을 확인해야 합니다. 사용자가 제공한 코디세이 화면에서 첫 미션·main 브랜치 선택과 네이토 사전평가 결과를 확인했습니다. 이번 작업에서 동료평가 요청 버튼은 누르지 않았습니다.
+전용 저장소 [damagez7788-cyber/codyssey-mission01](https://github.com/damagez7788-cyber/codyssey-mission01)의 `main` 브랜치에 자료를 업로드했으며, 현재 공개 범위는 **공개**입니다. 코디세이 평가 요청 화면에서 해당 미션·저장소·main 브랜치를 선택해 제출합니다. 네이토 사전평가와 동료평가의 신청·완료 상태는 코디세이 플랫폼에서 별도로 확인합니다.
 
 [원문 요구사항 대조](docs/requirements.md), [작성 지원 범위](docs/작성지원_및_검증범위.txt), [전체 명령어 해석](docs/commands.md)을 함께 확인합니다.
 
 ## 9 VS Code GitHub 로그인 확인
 
-2026-11-03 사용자가 제공한 실제 VS Code 계정 메뉴 화면에서 `damagez7788-cyber (GitHub)`를 확인했습니다. 이 화면은 GitHub 로그인 완료의 증거입니다. 별도로 VS Code에서 `codyssey-mission01 [WSL: Ubuntu]` 프로젝트와 `main` 브랜치가 열린 것을 확인했고, GitHub 업로드는 실제 push와 원격 브랜치 해시 비교로 검증했습니다. 설정 동기화나 Remote Tunnel 같은 추가 기능의 활성화를 주장하지 않습니다.
+2026-11-03 VS Code 계정 메뉴 원본 화면에서 `damagez7788-cyber (GitHub)`를 확인했습니다. 이 화면은 GitHub 로그인 완료의 증거입니다. 별도로 VS Code에서 `codyssey-mission01 [WSL: Ubuntu]` 프로젝트와 `main` 브랜치가 열린 것을 확인했고, GitHub 업로드는 실제 push와 원격 브랜치 해시 비교로 검증했습니다. 설정 동기화나 Remote Tunnel 같은 추가 기능의 활성화를 주장하지 않습니다.
 
 ![VS Code 계정 메뉴의 GitHub 로그인 확인](evidence/screenshots/vscode-github-account.png)
 
@@ -383,6 +383,6 @@ writer 컨테이너를 중지·삭제한 뒤 reader 컨테이너에서 같은 �
 
 ## 11 Chrome 주소창과 포트가 포함된 실행 화면
 
-2026-11-03 사용자가 제공한 Chrome 원본 스크린샷에서 주소창의 `localhost:18080`과 Jun Workshop 실제 응답 화면이 함께 보이는 것을 확인했습니다. 페이지의 `WORKSHOP_V1` 표시도 확인했습니다. 아래 파일은 받은 원본을 수정하지 않고 복사한 것으로, 주소창을 합성하거나 재작성하지 않았습니다.
+2026-11-03 Chrome 원본 스크린샷에서 주소창의 `localhost:18080`과 Jun Workshop 실제 응답 화면이 함께 보이는 것을 확인했습니다. 페이지의 `WORKSHOP_V1` 표시도 확인했습니다. 원본 캡처를 편집 없이 보관했으며 주소창과 실제 응답 화면을 함께 제공합니다.
 
 ![Chrome 주소창 localhost:18080과 실제 작업실 페이지](evidence/screenshots/chrome-addressbar-18080.png)
