@@ -4,11 +4,206 @@
 
 코디세이 개인 필수 미션 **내 컴퓨터에 개발자용 작업실 꾸미기**의 제출 프로젝트입니다. Ubuntu에서 개발 작업 환경을 구성하고, 커스텀 NGINX 이미지로 Jun Workshop 웹페이지를 실행했습니다. 이 문서는 강준권의 제출 프로젝트가 구현한 내용과 Ubuntu CLI, 파일·디렉터리 권한, Dockerfile, 포트 매핑, 바인드 마운트, 볼륨의 실제 검증 결과를 설명합니다.
 
-**현재 상태:** 새 프로젝트의 실행 검증 10개 통과. 로컬 Git 설정과 전용 비공개 GitHub 저장소 업로드를 완료했습니다. 2026-11-03 사용자 요청으로 지금은 업로드까지만 진행하며, 공개 전환과 코디세이 평가 신청은 나중에 진행합니다. VS Code의 GitHub 계정 로그인과 Ubuntu 프로젝트 열기를 확인했습니다. 사용자가 제공한 Chrome 원본 화면에서 주소창의 localhost:18080과 실제 페이지를 함께 확인했습니다. 이 상태를 미션 최종 통과로 표시하지 않습니다.
+**현재 상태:** 새 프로젝트의 실행 검증 10개 통과. 로컬 Git 설정과 전용 GitHub 저장소 업로드를 완료했습니다. 2026-11-03 공개 저장소인 것을 GitHub 조회로 확인했습니다. 이번 작업은 사전평가 지적 자료 보완과 재업로드이며, 동료평가 요청은 하지 않았습니다. VS Code의 GitHub 계정 로그인과 Ubuntu 프로젝트 열기를 확인했습니다. 사용자가 제공한 Chrome 원본 화면에서 주소창의 localhost:18080과 실제 페이지를 함께 확인했습니다. 이 상태를 미션 최종 통과로 표시하지 않습니다.
 
 이 저장소에는 이전 학습 연습 파일·화면을 포함하지 않았습니다. 새 프로젝트 코드 작성과 검증은 자비스의 지원으로 수행했으며, 로그의 `actor=jarvis-assisted`로 실행 주체를 표시했습니다.
 
 **검증 범위:** 아래의 ‘확인’은 제출자료와 실제 실행 기록을 대조한 결과입니다. Dockerfile 기반 이미지 빌드·실행, 포트 접속, 바인드 마운트 변경 반영 및 볼륨 데이터 유지를 검증했습니다. 선택 보너스 5개 항목의 수행 증거는 포함하지 않습니다.
+
+## 사전평가 지적 항목 보완: #9 · #16 · #18
+
+제출자: **강준권**. 아래는 제출자료의 핵심 증거를 본문에서 직접 확인할 수 있도록 정리한 보완입니다. 사전평가 재통과나 동료평가 완료를 주장하는 표시가 아닙니다.
+
+### 평가 항목 #9: Git 사용자 설정·기본 브랜치·원격 연결
+
+다음은 현재 Ubuntu 프로젝트 폴더에서 다시 조회한 **실제 출력**입니다. 과거 [08_git.txt](evidence/08_git.txt)는 origin 등록 전 기록이므로 당시의 빈 remote 출력을 사후에 고치지 않고 새 로그를 추가했습니다.
+
+```text
+$ git config --local user.name
+damagez7788-cyber
+exit_code=0
+
+$ git config --local user.email
+350343401+damagez7788-cyber@users.noreply.github.com
+exit_code=0
+
+$ git config --local init.defaultBranch
+main
+exit_code=0
+
+$ git remote -v
+origin	https://github.com/damagez7788-cyber/codyssey-mission01.git (fetch)
+origin	https://github.com/damagez7788-cyber/codyssey-mission01.git (push)
+exit_code=0
+
+$ git remote get-url origin
+https://github.com/damagez7788-cyber/codyssey-mission01.git
+exit_code=0
+
+$ git branch --show-current
+main
+exit_code=0
+```
+
+`git config --local user.name`은 이 저장소의 작성자 이름, `user.email`은 작성자 이메일, `init.defaultBranch`는 기본 브랜치 설정을 조회합니다. `remote -v`의 `fetch`는 내려받을 주소, `push`는 올릴 주소입니다. `branch --show-current`의 `main`은 현재 작업 브랜치입니다. 종료 코드 0은 각 조회 명령이 성공했다는 뜻입니다. 이메일은 공개용 GitHub noreply 주소입니다. [Git 설정·remote 전체 실측 로그](evidence/10_git_config_remote.txt).
+
+### 평가 항목 #16: 포트 충돌 진단·해제·대체 실행
+
+포트 오류가 나면 먼저 **어떤 프로그램/컨테이너가 해당 포트를 사용하는지 확인**하고, 본인 실습 서비스일 때만 대상을 지정해 중지합니다. 다음은 절차 안내이며 중지·프로세스 종료 명령을 이번 점검에서 실행한 기록은 아닙니다.
+
+1. **운영체제의 사용 프로세스 확인**
+
+```bash
+sudo ss -ltnp '( sport = :18080 )'
+```
+
+뜻: 관리 권한으로 TCP 수신 포트와 프로세스를 확인합니다. `-l` 수신 중, `-t` TCP, `-n` 숫자 표시, `-p` 프로세스 표시, `sport = :18080`은 로컬 18080번만 조회합니다. 출력 행의 `users`, 프로그램 이름, `pid`를 확인합니다. 제목 줄만 나오면 해당 시점에 조회된 수신 소켓이 없다는 뜻입니다.
+
+2. **Docker 컨테이너인지 대조**
+
+```bash
+sudo docker ps --filter publish=18080 --format 'table {{.Names}}	{{.Ports}}	{{.Status}}'
+```
+
+뜻: 실행 중인 컨테이너 가운데 18080 포트에 관련된 항목의 이름·포트 매핑·상태를 표시합니다. `PORTS` 열에서 호스트의 `18080->80/tcp` 매핑을 직접 대조합니다. 필요하면 `sudo docker ps --format 'table {{.Names}}	{{.Ports}}'`로 전체 실행 목록의 매핑을 확인합니다.
+
+3. **본인 실습 컨테이너가 점유한 경우 해제**
+
+아래의 `<...>`는 설명용 자리표시자입니다. 진단 결과로 확인한 실제 이름·PID로 바꿔야 하며 그대로 실행하는 명령이 아닙니다.
+
+```bash
+sudo docker stop <확인한_본인_컨테이너명>
+sudo ss -ltnp '( sport = :18080 )'
+sudo docker ps --filter publish=18080
+```
+
+`docker stop`은 이름으로 지정한 컨테이너를 정상 중지합니다. 중지 후 ss와 docker ps를 다시 확인해 점유가 해제됐는지 검증합니다. 컨테이너가 아닌 본인 프로세스라면 아래처럼 정체를 먼저 확인하고 정상 종료를 요청할 수 있습니다.
+
+```bash
+ps -p <확인한_PID> -o pid,comm,args
+sudo kill -TERM <확인한_본인_PID>
+sudo ss -ltnp '( sport = :18080 )'
+```
+
+`ps -p`는 해당 PID의 프로그램과 실행 인자를 확인하고, `kill -TERM`은 지정한 본인 프로세스에 정상 종료 신호를 보냅니다. 다른 사람/시스템 서비스나 Docker의 프록시를 임의로 종료하지 않습니다. Docker 서비스는 해당 컨테이너를 중지하는 방법을 우선합니다.
+
+4. **기존 서비스를 유지해야 하면 대체 포트 사용**
+
+```bash
+sudo ss -ltnp '( sport = :18090 )'
+sudo env WORKSHOP_PORT=18090 WORKSHOP_CONTAINER=jun-workshop-alt-18090 bash scripts/run.sh
+curl --fail --silent --show-error --retry 10 --retry-all-errors --retry-delay 1 --max-time 3 http://localhost:18090/health
+curl --fail --include http://localhost:18090/
+```
+
+`env`로 해당 실행에만 환경 변수를 전달합니다. `WORKSHOP_PORT`는 호스트 포트, `WORKSHOP_CONTAINER`는 새 컨테이너 이름입니다. `bash scripts/run.sh`는 기존 실행 도우미로 이미지를 빌드하고 지정한 포트로 실행합니다. 이미지 안 서버의 80번은 유지합니다. 재현 시 **예상** 결과는 `/health`의 `workshop-ready`와 본문의 `WORKSHOP_V1`, HTTP 200입니다. 이 대체 실행 예시를 실제 새 실행 결과라고 표시하지 않습니다.
+
+**이번 추가 점검의 실제 출력** (2026-11-03T13:36:37.753804+09:00):
+
+```text
+$ ss -ltnp '(' sport = :18080 ')'
+State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+exit_code=0
+
+$ ss -ltnp '(' sport = :18090 ')'
+State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+exit_code=0
+
+$ docker ps --filter publish=18080 --format 'table {{.Names}}	{{.Ports}}	{{.Status}}'
+NAMES     PORTS     STATUS
+exit_code=0
+```
+
+해석: 점검 당시 18080·18090은 ss 출력에 제목만 있었고, 18080을 공개하는 실행 중 Docker 컨테이너도 없었습니다. 이번에 새 포트 충돌을 겪었다거나 서비스를 종료했다고 기록하지 않습니다. [현재 포트 진단 전체 로그](evidence/11_port_diagnostics.txt).
+
+### 평가 항목 #18: 실제 트러블슈팅 2건
+
+두 사례는 원래 검증 실행 중 실제 발생한 문제입니다. 각각 **문제 → 원인 가설 → 검증 → 조치 → 재검증 결과 → 관련 로그** 순서로 정리했습니다. 의도한 권한 거부 실험은 아래 두 사례 수에 포함하지 않았습니다. 작성·실행 지원 범위와 실행 주체 표시는 원래 기록대로 보존합니다.
+
+### 사례 1: 빌드 성공 후 바탕 이미지 태그 조회 실패
+
+**문제:** 최초 검증에서 커스텀 이미지 build는 성공했지만 `nginx:stable-alpine` 조회가 종료 코드 1로 실패했습니다.
+
+```text
+$ docker image inspect nginx:stable-alpine
+[]
+Error response from daemon: No such image: nginx:stable-alpine
+exit_code=1
+```
+
+**원인 가설:** BuildKit이 FROM을 빌드용으로 해석한 것과 Docker 엔진에 이름 있는 기본 이미지 태그가 등록된 것은 별개일 수 있습니다. 빌드 성공만으로 기본 태그 조회 성공까지 가정한 점을 확인했습니다.
+
+**검증:** [첫 실패 원문](evidence/20261102T165758Z/04_build.txt)에서 커스텀 이미지 build·조회 성공과 기본 이미지 조회 실패가 연속으로 기록돼 있습니다. 의도적으로 만든 오류가 아닙니다.
+
+**조치:** 검증 스크립트에 `docker pull nginx:stable-alpine`을 명시해 기본 이미지를 받은 뒤 build와 inspect를 수행하도록 보완했습니다. `pull`은 이미지 받기, `build`는 Dockerfile로 제작하기, `image inspect`는 등록된 이미지의 세부 정보 확인입니다.
+
+**재검증 결과(실제 출력 발췌):**
+
+```text
+$ docker pull nginx:stable-alpine
+stable-alpine: Pulling from library/nginx
+Digest: sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949
+Status: Image is up to date for nginx:stable-alpine
+docker.io/library/nginx:stable-alpine
+exit_code=0
+```
+
+
+```text
+$ docker image inspect nginx:stable-alpine
+[
+    {
+        "Id": "sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949",
+        "RepoTags": [
+            "nginx:stable-alpine"
+[긴 출력 중략]
+exit_code=0
+```
+
+두 명령 모두 `exit_code=0`으로 성공했습니다. 정확한 이미지 ID·digest·빌드 출력은 [최종 빌드 원문](evidence/20261102T170206Z/04_build.txt)에서 확인할 수 있습니다.
+
+### 사례 2: 컨테이너 생성 직후 웹 접속 초기화
+
+**문제:** 두 번째 검증에서 컨테이너 run은 성공했지만, 즉시 요청한 HTTP 접속이 종료 코드 56으로 실패했습니다.
+
+```text
+$ curl --fail --silent --show-error --include http://127.0.0.1:18082/
+curl: (56) Recv failure: Connection reset by peer
+exit_code=56
+```
+
+**원인 가설:** 컨테이너 생성 직후 서버가 요청을 받을 준비가 끝나기 전에 curl이 실행됐을 가능성을 점검했습니다. 연결 초기화의 저수준 원인까지 확정하지는 않았습니다.
+
+**검증:** [두 번째 실패 원문](evidence/20261102T170027Z/06_bind.txt)에 run 성공 직후 curl 실패가 기록돼 있습니다. 당시 출력은 `Connection reset by peer`, 즉 상대편에서 연결을 초기화했다는 뜻입니다.
+
+**조치:** 먼저 `/health`가 응답할 때까지 상한을 둔 재시도를 수행한 다음 본문을 검사하도록 수정했습니다. `--retry 10`은 최대 10회 재시도, `--retry-all-errors`는 모든 오류를 재시도 대상으로 처리, `--retry-delay 1`은 재시도 사이 1초 대기, `--max-time 3`은 요청별 최대 3초입니다. `--fail`은 HTTP 오류를 실패로 처리하고 `--silent --show-error`는 진행 표시를 줄이되 오류를 보여 줍니다.
+
+**재검증 결과(실제 출력 발췌):**
+
+```text
+$ curl --fail --silent --show-error --retry 10 --retry-all-errors --retry-delay 1 --max-time 3 http://127.0.0.1:18082/health
+workshop-ready
+curl: (56) Recv failure: Connection reset by peer
+exit_code=0
+```
+
+위 stderr의 연결 초기화는 재시도 중 발생한 메시지입니다. 마지막에는 `workshop-ready`를 받고 종료 코드 0으로 성공했습니다. 오류 문구가 한 번 나타났다는 것과 최종 요청 실패를 구분합니다.
+
+```text
+$ curl --fail --silent --show-error --include http://127.0.0.1:18082/
+HTTP/1.1 200 OK
+Server: nginx/1.30.6
+Date: Mon, 02 Nov 2026 17:02:39 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3938
+Last-Modified: Mon, 02 Nov 2026 17:02:39 GMT
+[긴 출력 중략]
+exit_code=0
+```
+
+최종 HTTP 응답은 `200 OK`이고 종료 코드 0입니다. 원문 본문에서 변경 후 `WORKSHOP_V2`와 기존 COPY 컨테이너의 `WORKSHOP_V1` 유지도 확인했습니다. [최종 마운트·접속 원문](evidence/20261102T170206Z/06_bind.txt), [검사 통과 목록](evidence/20261102T170206Z/checks.json).
+
+---
 
 ## 1 프로젝트 개요와 커스텀 내용
 
@@ -39,7 +234,7 @@
 
 [환경 점검 명령과 실제 출력](evidence/20261102T170206Z/01_environment.txt), [로컬 Git 설정 및 GitHub CLI 계정 확인](evidence/08_git.txt), [실제 로컬 commit 이력](docs/git_history.md)
 
-Docker Desktop 대신 Ubuntu 안에 Docker 공식 패키지 저장소의 Docker Engine을 설치해 사용했습니다. 현재 엔진을 실행해 두었으며, Docker 그룹 권한이나 광범위한 사용자 권한을 새로 부여하지 않았습니다.
+Docker Desktop 대신 Ubuntu 안에 Docker 공식 패키지 저장소의 Docker Engine을 설치해 사용했습니다. 기록된 실행에서는 엔진 작동을 확인했으며, Docker 그룹 권한이나 광범위한 사용자 권한을 새로 부여하지 않았습니다.
 
 ## 3 파일 구성
 
@@ -108,7 +303,7 @@ sudo python3 scripts/verify.py --actor evaluator --owner "$(id -un)"
 | 볼륨 생성·연결, 컨테이너 삭제 전후 데이터 | 확인 | [내용과 SHA-256 비교](evidence/20261102T170206Z/07_volume.txt) |
 | Git 작성자·기본 브랜치 | 확인 | [로컬 설정](evidence/08_git.txt) |
 | 실제 문제 해결 2건 이상 | 확인 | [문제 해결 기록](docs/troubleshooting.md) 및 원래 실패 로그 |
-| GitHub에 이번 저장소 push | 확인 | [전용 비공개 저장소](https://github.com/damagez7788-cyber/codyssey-mission01), main 브랜치. [업로드 확인 로그](evidence/09_github_upload.txt) |
+| GitHub에 이번 저장소 push | 확인 | [전용 저장소](https://github.com/damagez7788-cyber/codyssey-mission01), main 브랜치. [업로드 확인 로그](evidence/09_github_upload.txt) |
 | VS Code에서 GitHub 로그인·이번 저장소 연결 | 확인 | VS Code 및 WSL 확장 설치, Ubuntu 프로젝트와 main 브랜치 열기 확인. [계정 메뉴 화면](evidence/screenshots/vscode-github-account.png)에 damagez7788-cyber (GitHub) 표시 |
 | 주소창과 포트가 보이는 브라우저 캡처 | 확인 | [Chrome 주소창과 실제 페이지](evidence/screenshots/chrome-addressbar-18080.png). 사용자 제공 원본이며 localhost:18080과 WORKSHOP_V1이 함께 보임 |
 | 코디세이 평가 요청 | 사용자 요청으로 보류 | 미션 시작 신청 완료 안내 확인. 평가 신청은 하지 않음. 공개 전환도 나중에 진행 |
@@ -162,7 +357,7 @@ writer 컨테이너를 중지·삭제한 뒤 reader 컨테이너에서 같은 �
 
 미션 원문은 GitHub Repository 링크로 제출하고, README에서 모든 수행 결과에 접근할 수 있어야 한다고 명시합니다. 이 폴더의 파일을 전용 저장소에 올린 뒤 저장소 접근 권한과 코디세이 코드저장소 연결을 확인해야 합니다.
 
-전용 저장소 [damagez7788-cyber/codyssey-mission01](https://github.com/damagez7788-cyber/codyssey-mission01)의 `main` 브랜치에 업로드했습니다. 현재 공개 범위는 **비공개**입니다. 2026-11-03 사용자 요청에 따라 공개 전환과 평가 신청은 보류합니다. 추가 화면 증거 보완은 마쳤으며, 평가 전에는 저장소 접근 및 플랫폼 연결을 확인해야 합니다. 코디세이의 저장소 선택 목록에서 새 비공개 저장소가 표시되는 것은 아직 확인하지 못했습니다.
+전용 저장소 [damagez7788-cyber/codyssey-mission01](https://github.com/damagez7788-cyber/codyssey-mission01)의 `main` 브랜치에 업로드했습니다. 현재 공개 범위는 **공개**입니다. 이번 보완 작업에서 동료평가 신청은 하지 않았습니다. 추가 화면 증거 보완은 마쳤으며, 평가 전에는 저장소 접근 및 플랫폼 연결을 확인해야 합니다. 사용자가 제공한 코디세이 화면에서 첫 미션·main 브랜치 선택과 네이토 사전평가 결과를 확인했습니다. 이번 작업에서 동료평가 요청 버튼은 누르지 않았습니다.
 
 [원문 요구사항 대조](docs/requirements.md), [작성 지원 범위](docs/작성지원_및_검증범위.txt), [전체 명령어 해석](docs/commands.md)을 함께 확인합니다.
 

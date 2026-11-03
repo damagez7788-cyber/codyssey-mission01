@@ -1,0 +1,23 @@
+# Actual read-only verification; 2026-11-03T13:36:37.753804+09:00
+actor=jarvis-assisted
+cwd=/home/damagez/codyssey-mission01
+
+This is a present-state snapshot, not a manufactured port-conflict incident. No process or container was stopped. Historical Docker execution evidence remains in the original dated logs.
+
+$ ss -ltnp '(' sport = :18080 ')'
+State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+exit_code=0
+
+$ ss -ltnp '(' sport = :18090 ')'
+State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+exit_code=0
+
+$ docker ps --filter publish=18080 --format 'table {{.Names}}	{{.Ports}}	{{.Status}}'
+NAMES     PORTS     STATUS
+exit_code=0
+
+$ docker ps -a --filter name=jun-m01-20261102t170206z-web-a --format 'table {{.Names}}	{{.Status}}	{{.Ports}}'
+NAMES                            STATUS                    PORTS
+jun-m01-20261102t170206z-web-a   Exited (0) 10 hours ago   
+exit_code=0
+

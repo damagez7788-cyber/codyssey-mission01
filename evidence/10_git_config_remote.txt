@@ -1,0 +1,35 @@
+# Actual read-only verification; 2026-11-03T13:36:37.753804+09:00
+actor=jarvis-assisted
+cwd=/home/damagez/codyssey-mission01
+
+Safe project-local user/default-branch settings and current remote. Authentication token/configuration is not collected.
+
+$ git config --local user.name
+damagez7788-cyber
+exit_code=0
+
+$ git config --local user.email
+350343401+damagez7788-cyber@users.noreply.github.com
+exit_code=0
+
+$ git config --local init.defaultBranch
+main
+exit_code=0
+
+$ git remote -v
+origin	https://github.com/damagez7788-cyber/codyssey-mission01.git (fetch)
+origin	https://github.com/damagez7788-cyber/codyssey-mission01.git (push)
+exit_code=0
+
+$ git remote get-url origin
+https://github.com/damagez7788-cyber/codyssey-mission01.git
+exit_code=0
+
+$ git branch --show-current
+main
+exit_code=0
+
+$ git status --short --branch
+## main...origin/main
+exit_code=0
+
